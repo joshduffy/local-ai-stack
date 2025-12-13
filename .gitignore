@@ -1,0 +1,45 @@
+# Model files
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+*.bin
+*.onnx
+*.gguf
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+__pycache__/
+*.pyc
+
+# Output directories
+ComfyUI/output/
+ComfyUI/input/
+ComfyUI/temp/
+
+# Logs
+*.log
+logs/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ComfyUI specific
+ComfyUI/models/
+ComfyUI/custom_nodes/*/
+!ComfyUI/custom_nodes/.gitkeep
+
+# Database files
+*.db
+*.sqlite
+
+# Temporary files
+*.tmp
+*.temp
