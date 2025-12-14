@@ -43,3 +43,4 @@ ComfyUI/custom_nodes/*/
 # Temporary files
 *.tmp
 *.temp
+.vercel
