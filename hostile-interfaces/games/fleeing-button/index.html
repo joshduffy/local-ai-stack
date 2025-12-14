@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Choice | Hostile Interfaces</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C42C2L27VR"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-C42C2L27VR');</script>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .modal h2 {
+            color: #1a1a2e;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .button-container {
+            position: relative;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            min-height: 50px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 500;
+        }
+
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-confirm {
+            background: #4a9eff;
+            color: white;
+            position: absolute;
+            z-index: 10;
+            user-select: none;
+        }
+
+        .btn-confirm:hover {
+            background: #3a8eef;
+        }
+
+        .btn-confirm.panicking {
+            animation: panic 0.1s infinite;
+        }
+
+        @keyframes panic {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .taunt {
+            position: fixed;
+            color: #ff6b6b;
+            font-size: 14px;
+            font-weight: bold;
+            pointer-events: none;
+            animation: tauntFade 1s forwards;
+            z-index: 100;
+        }
+
+        @keyframes tauntFade {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-30px); }
+        }
+
+        .progress-container {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a9eff, #667eea);
+            transition: width 0.3s;
+            border-radius: 4px;
+        }
+
+        .click-count {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .victory-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .victory-content {
+            text-align: center;
+            color: white;
+        }
+
+        .victory-content h2 {
+            color: #4a9eff;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .victory-content p {
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            color: #4a9eff;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .btn-restart {
+            background: #4a9eff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .btn-menu {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .difficulty-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .difficulty-indicator span {
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="difficulty-indicator">
+        Difficulty: <span id="difficultyLevel">Cooperative</span>
+    </div>
+
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-icon">🎉</div>
+            <h2>Claim Your Free Gift!</h2>
+            <p>
+                Congratulations! You've been selected to receive a FREE premium subscription.
+                Click "Yes, I Want It!" to claim your reward.
+            </p>
+            <div class="button-container" id="buttonContainer">
+                <button class="btn btn-cancel" onclick="clickedCancel()">No Thanks</button>
+                <button class="btn btn-confirm" id="confirmBtn">Yes, I Want It!</button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-label">Confirmation Progress</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="click-count" id="clickCount">0 / 5 confirmations</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="victory-overlay" id="victoryScreen" style="display: none;"></div>
+
+    <script src="game.js"></script>
+</body>
+</html>

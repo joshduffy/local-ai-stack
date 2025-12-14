@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hostile Interfaces | Bad UX Games</title>
-    <meta name="description" content="An anthology of 9 intentionally terrible UI games. Bad UX is the mechanic - consent dialogs, password hell, CAPTCHA nightmares, and more. Victory comes from understanding hidden rules.">
+    <meta name="description" content="An anthology of 11 intentionally terrible UI games. Bad UX is the mechanic - consent dialogs, password hell, CAPTCHA nightmares, and more. Victory comes from understanding hidden rules.">
     <meta name="keywords" content="hostile interfaces, bad UX games, UI games, dark patterns, game design, browser games, password simulator, CAPTCHA game">
     <meta name="author" content="Josh Duffy">
     <meta name="robots" content="index, follow">
@@ -12,7 +12,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Hostile Interfaces | Bad UX Games">
-    <meta property="og:description" content="An anthology of 9 intentionally terrible UI games. Bad UX is the mechanic. Victory comes from understanding hidden rules.">
+    <meta property="og:description" content="An anthology of 11 intentionally terrible UI games. Bad UX is the mechanic. Victory comes from understanding hidden rules.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hostile.joshduffy.dev">
     <meta property="og:site_name" content="Hostile Interfaces">
@@ -21,7 +21,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Hostile Interfaces | Bad UX Games">
-    <meta name="twitter:description" content="An anthology of 9 intentionally terrible UI games. Bad UX is the mechanic. Victory comes from understanding hidden rules.">
+    <meta name="twitter:description" content="An anthology of 11 intentionally terrible UI games. Bad UX is the mechanic. Victory comes from understanding hidden rules.">
 
     <link rel="canonical" href="https://hostile.joshduffy.dev">
     <link rel="stylesheet" href="style.css">
@@ -161,6 +161,57 @@
             font-weight: bold;
         }
 
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .section-header {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            padding: 0 20px;
+        }
+
+        .section-header h2 {
+            color: white;
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .section-header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .section-divider {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -215,6 +266,97 @@
         </p>
     </div>
 
+    <div class="section-header">
+        <h2>Featured</h2>
+        <p>The cream of the crop. Maximum frustration, maximum satisfaction.</p>
+    </div>
+
+    <div class="game-grid">
+        <a href="games/phone-support/index.html" class="game-card">
+            <span class="featured-badge">FEATURED</span>
+            <div class="game-icon">📞</div>
+            <h3>Phone Support</h3>
+            <p>Verify your email address over the phone. The agent uses an absurd phonetic alphabet and talks faster when annoyed.</p>
+            <div class="game-meta">
+                <span class="difficulty-hard">● Hard</span>
+                <span>~4 min</span>
+            </div>
+        </a>
+
+        <a href="games/fleeing-button/index.html" class="game-card">
+            <span class="new-badge">NEW</span>
+            <div class="game-icon">🎯</div>
+            <h3>Fleeing Button</h3>
+            <p>Claim your free gift. The confirmation button has commitment issues and will do anything to avoid being clicked.</p>
+            <div class="game-meta">
+                <span class="difficulty-medium">● Medium</span>
+                <span>~3 min</span>
+            </div>
+        </a>
+
+        <a href="games/dissolving-captcha/index.html" class="game-card">
+            <span class="new-badge">NEW</span>
+            <div class="game-icon">💨</div>
+            <h3>Dissolving CAPTCHA</h3>
+            <p>Prove you're human by typing disappearing text. The characters fade, scramble, and glitch as you try to read them.</p>
+            <div class="game-meta">
+                <span class="difficulty-hard">● Hard</span>
+                <span>~4 min</span>
+            </div>
+        </a>
+
+        <a href="games/password-invaders/index.html" class="game-card">
+            <span class="featured-badge">FEATURED</span>
+            <div class="game-icon">👾</div>
+            <h3>Password Invaders</h3>
+            <p>Shoot falling characters to build a valid password before they crush you. Meet the requirements or die.</p>
+            <div class="game-meta">
+                <span class="difficulty-hard">● Hard</span>
+                <span>~5 min</span>
+            </div>
+        </a>
+
+        <a href="games/settings-that-eat-you/index.html" class="game-card">
+            <span class="featured-badge">FEATURED</span>
+            <div class="game-icon">⚙️</div>
+            <h3>Settings That Eat You</h3>
+            <p>Enable dark mode. Navigate interdependent toggles, inverted meanings, and hidden side effects.</p>
+            <div class="game-meta">
+                <span class="difficulty-hard">● Hard</span>
+                <span>~5 min</span>
+            </div>
+        </a>
+
+        <a href="games/two-factor-dungeon/index.html" class="game-card">
+            <span class="featured-badge">FEATURED</span>
+            <div class="game-icon">🔑</div>
+            <h3>Two-Factor Dungeon</h3>
+            <p>Log in using two-factor authentication. The correct method changes based on your failures.</p>
+            <div class="game-meta">
+                <span class="difficulty-hard">● Hard</span>
+                <span>~6 min</span>
+            </div>
+        </a>
+
+        <a href="games/unsubscribe-maze/index.html" class="game-card">
+            <span class="featured-badge">FEATURED</span>
+            <div class="game-icon">🚪</div>
+            <h3>Unsubscribe Maze</h3>
+            <p>Cancel your subscription. Navigate through emotional manipulation and hidden requirements.</p>
+            <div class="game-meta">
+                <span class="difficulty-medium">● Medium</span>
+                <span>~4 min</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="section-header">
+        <h2>More Games</h2>
+        <p>The full collection. All equally hostile.</p>
+    </div>
+
     <div class="game-grid">
         <a href="games/consent-dialog/index.html" class="game-card">
             <div class="game-icon">📜</div>
@@ -253,58 +395,6 @@
             <div class="game-meta">
                 <span class="difficulty-easy">● Easy</span>
                 <span>~3 min</span>
-            </div>
-        </a>
-
-        <a href="games/two-factor-dungeon/index.html" class="game-card">
-            <div class="game-icon">🔑</div>
-            <h3>Two-Factor Dungeon</h3>
-            <p>Log in using two-factor authentication. The correct method changes based on your failures.</p>
-            <div class="game-meta">
-                <span class="difficulty-hard">● Hard</span>
-                <span>~6 min</span>
-            </div>
-        </a>
-
-        <a href="games/unsubscribe-maze/index.html" class="game-card">
-            <div class="game-icon">🚪</div>
-            <h3>Unsubscribe Maze</h3>
-            <p>Cancel your subscription. Navigate through emotional manipulation and hidden requirements.</p>
-            <div class="game-meta">
-                <span class="difficulty-medium">● Medium</span>
-                <span>~4 min</span>
-            </div>
-        </a>
-
-        <a href="games/settings-that-eat-you/index.html" class="game-card">
-            <div class="game-icon">⚙️</div>
-            <h3>Settings That Eat You</h3>
-            <p>Enable dark mode. Navigate interdependent toggles, inverted meanings, and hidden side effects.</p>
-            <div class="game-meta">
-                <span class="difficulty-hard">● Hard</span>
-                <span>~5 min</span>
-            </div>
-        </a>
-
-        <a href="games/password-invaders/index.html" class="game-card">
-            <span class="bonus-badge">BONUS</span>
-            <div class="game-icon">👾</div>
-            <h3>Password Invaders</h3>
-            <p>Shoot falling characters to build a valid password before they crush you. Meet the requirements or die.</p>
-            <div class="game-meta">
-                <span class="difficulty-hard">● Hard</span>
-                <span>~5 min</span>
-            </div>
-        </a>
-
-        <a href="games/phone-support/index.html" class="game-card">
-            <span class="bonus-badge">BONUS</span>
-            <div class="game-icon">📞</div>
-            <h3>Phone Support</h3>
-            <p>Verify your email address over the phone. The agent uses an absurd phonetic alphabet and talks faster when annoyed.</p>
-            <div class="game-meta">
-                <span class="difficulty-hard">● Hard</span>
-                <span>~4 min</span>
             </div>
         </a>
     </div>
