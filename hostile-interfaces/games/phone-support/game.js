@@ -231,6 +231,54 @@
         return parts.join(', ');
     }
 
+    // Voice cache
+    let selectedVoice = null;
+
+    // Find the best available voice
+    function getBestVoice() {
+        if (selectedVoice) return selectedVoice;
+
+        const voices = speechSynth.getVoices();
+        if (voices.length === 0) return null;
+
+        // Priority list - prefer natural/enhanced voices (macOS has good ones)
+        const priorities = [
+            // macOS premium voices
+            v => v.name.includes('Samantha') && v.name.includes('Enhanced'),
+            v => v.name.includes('Karen') && v.name.includes('Enhanced'),
+            v => v.name.includes('Allison') && v.name.includes('Enhanced'),
+            v => v.name.includes('Ava') && v.name.includes('Enhanced'),
+            v => v.name.includes('Susan') && v.name.includes('Enhanced'),
+            v => v.name.includes('Zoe') && v.name.includes('Enhanced'),
+            // Any enhanced English voice
+            v => v.name.includes('Enhanced') && v.lang.startsWith('en'),
+            // Premium tier
+            v => v.name.includes('Premium') && v.lang.startsWith('en'),
+            // Specific good voices
+            v => v.name === 'Samantha',
+            v => v.name === 'Karen',
+            v => v.name === 'Allison',
+            // Google voices (Chrome)
+            v => v.name.includes('Google') && v.lang.startsWith('en-US'),
+            // Any US English
+            v => v.lang === 'en-US',
+            // Any English
+            v => v.lang.startsWith('en')
+        ];
+
+        for (const test of priorities) {
+            const voice = voices.find(test);
+            if (voice) {
+                selectedVoice = voice;
+                console.log('Selected voice:', voice.name);
+                return voice;
+            }
+        }
+
+        selectedVoice = voices[0];
+        return voices[0];
+    }
+
     // Speak text
     function speak(text, options = {}) {
         return new Promise((resolve) => {
@@ -241,18 +289,19 @@
             const utterance = new SpeechSynthesisUtterance(text);
             currentUtterance = utterance;
 
-            // Get voices
-            let voices = speechSynth.getVoices();
-            if (voices.length > 0) {
-                // Try to find a less pleasant voice
-                const voice = voices.find(v => v.name.includes('Karen') || v.name.includes('Samantha'))
-                    || voices.find(v => v.lang.startsWith('en'))
-                    || voices[0];
+            // Get best voice
+            const voice = getBestVoice();
+            if (voice) {
                 utterance.voice = voice;
             }
 
-            utterance.rate = options.rate || 1.0;
-            utterance.pitch = options.pitch || 1.0;
+            // Natural variation in speech
+            const baseRate = options.rate || 1.0;
+            const basePitch = options.pitch || 1.0;
+
+            // Add slight randomness for more natural feel
+            utterance.rate = baseRate + (Math.random() * 0.1 - 0.05);
+            utterance.pitch = basePitch + (Math.random() * 0.1 - 0.05);
             utterance.volume = options.volume || 1.0;
 
             speakingIndicator.classList.remove('silent');
