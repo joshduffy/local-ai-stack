@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions | Hostile Interfaces</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .terms-container {
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            padding: 15px;
+            background: white;
+            font-size: 11px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .terms-container h4 {
+            font-size: 12px;
+            margin: 15px 0 8px 0;
+        }
+
+        .terms-container p {
+            margin: 0 0 10px 0;
+        }
+
+        .scroll-indicator {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 8px;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-top: none;
+            margin-bottom: 15px;
+        }
+
+        .scroll-indicator.complete {
+            color: var(--success);
+            background: #f0fff0;
+        }
+
+        .accept-btn {
+            transition: all 0.1s;
+        }
+
+        .checkbox-section {
+            background: var(--bg-light);
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .time-warning {
+            font-size: 11px;
+            color: var(--warning);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Terms of Service Agreement</h2>
+            </div>
+
+            <div id="gameArea">
+                <p class="text-muted" style="font-size: 13px; margin-bottom: 15px;">
+                    Please review and accept our Terms of Service to continue. We value your privacy and trust.
+                </p>
+
+                <div id="errorArea"></div>
+
+                <div class="terms-container" id="termsContainer">
+                    <h4>1. ACCEPTANCE OF TERMS</h4>
+                    <p>By accessing or using the Service, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the Service. Your continued use of the Service following the posting of any changes to these Terms constitutes acceptance of those changes.</p>
+
+                    <h4>2. DESCRIPTION OF SERVICE</h4>
+                    <p>The Service provides users with access to a collection of resources, including but not limited to various communications tools, forums, shopping services, personalized content, and branded programming through its network of properties. You also understand and agree that the Service may include advertisements and that these advertisements are necessary for the Company to provide the Service.</p>
+
+                    <h4>3. YOUR REGISTRATION OBLIGATIONS</h4>
+                    <p>In consideration of your use of the Service, you agree to: (a) provide true, accurate, current, and complete information about yourself as prompted by the Service's registration form, and (b) maintain and promptly update the Registration Data to keep it true, accurate, current, and complete.</p>
+
+                    <h4>4. PRIVACY POLICY</h4>
+                    <p>Registration Data and certain other information about you are subject to our Privacy Policy. You understand that through your use of the Service you consent to the collection and use of this information, including the transfer of this information to the United States and/or other countries for storage, processing, and use by the Company and its affiliates.</p>
+
+                    <h4>5. MEMBER CONDUCT</h4>
+                    <p>You understand that all information, data, text, software, music, sound, photographs, graphics, video, messages, tags, or other materials ("Content"), whether publicly posted or privately transmitted, are the sole responsibility of the person from whom such Content originated.</p>
+
+                    <h4>6. SPECIAL REQUIREMENTS</h4>
+                    <p>Users must scroll through the entirety of this document before acceptance is valid. Partial scrolling will be detected and consent will be invalidated. Time spent reading must meet minimum thresholds. Checkbox selections must follow specific patterns as outlined in Section 12.4.b of our Compliance Guidelines.</p>
+
+                    <h4>7. CONSENT VERIFICATION</h4>
+                    <p>The system maintains detailed records of user interaction patterns to ensure genuine consent. Automated or rushed acceptance attempts will be flagged and rejected. Users must demonstrate understanding through their behavior patterns.</p>
+
+                    <h4>8. HIDDEN REQUIREMENTS</h4>
+                    <p>Certain requirements for valid consent are not explicitly displayed to ensure users read the complete document. These include: maintaining scroll position for minimum durations, correct checkbox ordering, and acceptance timing windows.</p>
+
+                    <h4>9. MODIFICATION OF TERMS</h4>
+                    <p>We reserve the right to modify these terms at any time. Changes become effective immediately upon posting. Continued use of the Service constitutes acceptance of modified terms. Notification of changes is provided at our discretion.</p>
+
+                    <h4>10. FINAL PROVISIONS</h4>
+                    <p>By clicking "I Accept," you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. You further acknowledge that this agreement constitutes the complete and exclusive statement of the agreement between you and the Company. Thank you for your compliance.</p>
+                </div>
+
+                <div class="scroll-indicator" id="scrollIndicator">
+                    ↓ Scroll to read all terms ↓
+                </div>
+
+                <div class="checkbox-section">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="check1">
+                        <label for="check1">I have read and understand the Terms of Service</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="check2">
+                        <label for="check2">I agree to the Privacy Policy and data collection practices</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="check3">
+                        <label for="check3">I am at least 18 years of age or have parental consent</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="check4">
+                        <label for="check4">I consent to receive promotional communications (optional)</label>
+                    </div>
+
+                    <div class="time-warning" id="timeWarning" style="display: none;"></div>
+                </div>
+
+                <div class="btn-group">
+                    <button id="declineBtn" class="btn btn-secondary">Decline</button>
+                    <button id="acceptBtn" class="btn btn-primary accept-btn">I Accept</button>
+                </div>
+            </div>
+
+            <div id="victoryArea" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="../../engine.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

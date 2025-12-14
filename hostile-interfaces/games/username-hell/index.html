@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Username | Hostile Interfaces</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .username-field {
+            position: relative;
+        }
+
+        .availability-indicator {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+        }
+
+        .availability-indicator.checking {
+            color: var(--text-muted);
+        }
+
+        .availability-indicator.available {
+            color: var(--success);
+        }
+
+        .availability-indicator.taken {
+            color: var(--danger);
+        }
+
+        .suggestions {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .suggestions h4 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+        }
+
+        .suggestion-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .suggestion {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .suggestion:hover {
+            border-color: var(--primary);
+        }
+
+        .suggestion.bad {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .rate-limit-warning {
+            background: #fff8f0;
+            border: 1px solid #ffddaa;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #995500;
+            margin-top: 10px;
+        }
+
+        .attempt-counter {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Choose Your Username</h2>
+            </div>
+
+            <div id="gameArea">
+                <p class="text-muted" style="font-size: 13px; margin-bottom: 15px;">
+                    Your username is how others will identify you. Choose wisely!
+                </p>
+
+                <div id="errorArea"></div>
+
+                <div class="form-group">
+                    <label for="username" class="required">Username</label>
+                    <div class="username-field">
+                        <input type="text" id="username" placeholder="Enter desired username" autocomplete="off">
+                        <span class="availability-indicator" id="availabilityIndicator"></span>
+                    </div>
+                    <div class="attempt-counter" id="attemptCounter"></div>
+                </div>
+
+                <div id="rateLimitWarning" class="rate-limit-warning" style="display: none;">
+                    You're checking usernames too quickly. Please wait before trying again.
+                </div>
+
+                <div class="suggestions" id="suggestions" style="display: none;">
+                    <h4>Suggested usernames:</h4>
+                    <div class="suggestion-list" id="suggestionList"></div>
+                </div>
+
+                <div class="btn-group">
+                    <button id="checkBtn" class="btn btn-secondary">Check Availability</button>
+                    <button id="claimBtn" class="btn btn-primary" disabled>Claim Username</button>
+                </div>
+            </div>
+
+            <div id="victoryArea" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="../../engine.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

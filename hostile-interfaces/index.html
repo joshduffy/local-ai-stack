@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostile Interfaces</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+
+        .launcher-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: white;
+        }
+
+        .launcher-header h1 {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 10px;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .launcher-header .subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .launcher-header .tagline {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 0 20px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            padding: 25px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .game-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), #764ba2);
+        }
+
+        .game-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .game-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1a1a2e;
+        }
+
+        .game-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .game-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .game-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .difficulty-easy { color: var(--success); }
+        .difficulty-medium { color: var(--warning); }
+        .difficulty-hard { color: var(--danger); }
+
+        .bonus-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+        }
+
+        footer a {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .philosophy {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .philosophy h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .philosophy em {
+            color: #f5576c;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="launcher-header">
+        <h1>HOSTILE INTERFACES</h1>
+        <p class="subtitle">An anthology of intentionally terrible user experiences</p>
+        <p class="tagline">The system is correct. The user is wrong.</p>
+    </div>
+
+    <div class="philosophy">
+        <h3>Design Philosophy</h3>
+        <p>
+            Each game in this collection uses <em>bad UI as the core mechanic</em>.
+            The interface itself is your adversary. Victory comes from understanding
+            the system's hidden rules—not from guessing.
+        </p>
+        <p style="margin-top: 10px;">
+            Frustration emerges from <em>consistency</em>, not randomness.
+            Every failure teaches you something. Every success is earned.
+        </p>
+    </div>
+
+    <div class="game-grid">
+        <a href="games/consent-dialog/index.html" class="game-card">
+            <div class="game-icon">📜</div>
+            <h3>Consent Dialog</h3>
+            <p>Accept the Terms of Service. The system has specific hidden requirements for what constitutes valid consent.</p>
+            <div class="game-meta">
+                <span class="difficulty-easy">● Easy</span>
+                <span>~3 min</span>
+            </div>
+        </a>
+
+        <a href="games/password-simulator/index.html" class="game-card">
+            <div class="game-icon">🔐</div>
+            <h3>Password Simulator</h3>
+            <p>Create an acceptable password. Rules contradict each other and evolve based on your attempts.</p>
+            <div class="game-meta">
+                <span class="difficulty-medium">● Medium</span>
+                <span>~5 min</span>
+            </div>
+        </a>
+
+        <a href="games/captcha-eternal/index.html" class="game-card">
+            <div class="game-icon">🤖</div>
+            <h3>CAPTCHA Eternal</h3>
+            <p>Prove you are human. The criteria for "correct" selections shifts based on hidden rules.</p>
+            <div class="game-meta">
+                <span class="difficulty-medium">● Medium</span>
+                <span>~4 min</span>
+            </div>
+        </a>
+
+        <a href="games/username-hell/index.html" class="game-card">
+            <div class="game-icon">👤</div>
+            <h3>Username Hell</h3>
+            <p>Choose a valid username. The namespace is infinite but nothing is ever available.</p>
+            <div class="game-meta">
+                <span class="difficulty-easy">● Easy</span>
+                <span>~3 min</span>
+            </div>
+        </a>
+
+        <a href="games/two-factor-dungeon/index.html" class="game-card">
+            <div class="game-icon">🔑</div>
+            <h3>Two-Factor Dungeon</h3>
+            <p>Log in using two-factor authentication. The correct method changes based on your failures.</p>
+            <div class="game-meta">
+                <span class="difficulty-hard">● Hard</span>
+                <span>~6 min</span>
+            </div>
+        </a>
+
+        <a href="games/unsubscribe-maze/index.html" class="game-card">
+            <div class="game-icon">🚪</div>
+            <h3>Unsubscribe Maze</h3>
+            <p>Cancel your subscription. Navigate through emotional manipulation and hidden requirements.</p>
+            <div class="game-meta">
+                <span class="difficulty-medium">● Medium</span>
+                <span>~4 min</span>
+            </div>
+        </a>
+
+        <a href="games/settings-that-eat-you/index.html" class="game-card">
+            <div class="game-icon">⚙️</div>
+            <h3>Settings That Eat You</h3>
+            <p>Enable dark mode. Navigate interdependent toggles, inverted meanings, and hidden side effects.</p>
+            <div class="game-meta">
+                <span class="difficulty-hard">● Hard</span>
+                <span>~5 min</span>
+            </div>
+        </a>
+
+        <a href="games/password-invaders/index.html" class="game-card">
+            <span class="bonus-badge">BONUS</span>
+            <div class="game-icon">👾</div>
+            <h3>Password Invaders</h3>
+            <p>Shoot falling characters to build a valid password before they crush you. Meet the requirements or die.</p>
+            <div class="game-meta">
+                <span class="difficulty-hard">● Hard</span>
+                <span>~5 min</span>
+            </div>
+        </a>
+    </div>
+
+    <footer>
+        <p>
+            All games run entirely in your browser. No data is collected.
+            <br>
+            Built with frustration. Inspired by every terrible form you've ever filled out.
+        </p>
+    </footer>
+</body>
+</html>
