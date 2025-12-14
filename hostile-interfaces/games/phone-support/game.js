@@ -76,7 +76,13 @@
         'IsItAnIOrA1@yahoo.com',
         'TwoTs_TwoRs_Garrett@aol.com',
         'SmithWithAnI_NotAY@gmail.com',
-        'ThatsCapitalBNotD@hotmail.com'
+        'ThatsCapitalBNotD@hotmail.com',
+        'AAAAAThatsSixAs@yahoo.com',
+        'Lllll_FiveLowerCaseLs@gmail.com',
+        'Eight8s88888888@hotmail.com',
+        'MyLastNameIsNull@outlook.com',
+        'Robert_DropTable@students.edu',
+        'DotComNotDotNet.net@mail.com'
     ];
 
     // Absurd phonetic alphabet
