@@ -16,10 +16,14 @@ BOLD='\033[1m'
 NC='\033[0m' # No Color
 
 # Configuration
-COMFYUI_DIR="${HOME}/local-ai-stack/ComfyUI"
+STACK_DIR="${HOME}/local-ai-stack"
+COMFYUI_DIR="${STACK_DIR}/ComfyUI"
+DASHBOARD_DIR="${STACK_DIR}/dashboard"
 COMFYUI_PORT=8188
 OLLAMA_PORT=11434
+DASHBOARD_PORT=3000
 COMFYUI_PIDFILE="${COMFYUI_DIR}/.comfyui.pid"
+DASHBOARD_PIDFILE="${DASHBOARD_DIR}/.dashboard.pid"
 
 # Helper functions
 print_header() {
@@ -131,12 +135,12 @@ start_comfyui() {
 
         cd "$COMFYUI_DIR"
 
-        # Activate venv and start ComfyUI
-        if [ -f "venv/bin/activate" ]; then
-            source venv/bin/activate
-            nohup python main.py --listen 127.0.0.1 --port $COMFYUI_PORT > /dev/null 2>&1 &
+        # Start ComfyUI using venv's python directly
+        if [ -f "venv/bin/python" ]; then
+            # Redirect to log file to prevent broken pipe errors from tqdm
+            COMFYUI_LOG="${STACK_DIR}/ComfyUI/comfyui.log"
+            nohup ./venv/bin/python main.py --listen 127.0.0.1 --port $COMFYUI_PORT > "$COMFYUI_LOG" 2>&1 &
             echo $! > "$COMFYUI_PIDFILE"
-            deactivate 2>/dev/null || true
         else
             print_error "ComfyUI virtual environment not found"
             return 1
@@ -389,6 +393,111 @@ cmd_test() {
     fi
 }
 
+# Check if dashboard is running
+is_dashboard_running() {
+    if [ -f "$DASHBOARD_PIDFILE" ]; then
+        local pid=$(cat "$DASHBOARD_PIDFILE")
+        if ps -p $pid > /dev/null 2>&1; then
+            return 0
+        fi
+    fi
+    is_port_open $DASHBOARD_PORT
+}
+
+# Start Dashboard
+start_dashboard() {
+    if is_dashboard_running; then
+        print_info "Dashboard is already running"
+    else
+        print_info "Starting Dashboard..."
+
+        if [ ! -d "$DASHBOARD_DIR" ]; then
+            print_error "Dashboard directory not found: $DASHBOARD_DIR"
+            return 1
+        fi
+
+        cd "$DASHBOARD_DIR"
+        nohup npm run dev > /dev/null 2>&1 &
+        echo $! > "$DASHBOARD_PIDFILE"
+
+        print_info "Waiting for Dashboard to start..."
+        for i in {1..30}; do
+            if is_port_open $DASHBOARD_PORT; then
+                print_success "Dashboard started successfully"
+                print_info "Web UI: http://127.0.0.1:$DASHBOARD_PORT"
+                return 0
+            fi
+            sleep 1
+        done
+
+        print_error "Dashboard failed to start within 30 seconds"
+        return 1
+    fi
+}
+
+# Stop Dashboard
+stop_dashboard() {
+    if is_dashboard_running; then
+        print_info "Stopping Dashboard..."
+        local pid=$(cat "$DASHBOARD_PIDFILE" 2>/dev/null)
+        if [ -n "$pid" ]; then
+            kill $pid 2>/dev/null || true
+            sleep 1
+            if ps -p $pid > /dev/null 2>&1; then
+                kill -9 $pid 2>/dev/null || true
+            fi
+        fi
+        # Also kill any Next.js processes
+        pkill -f "next-server" 2>/dev/null || true
+        pkill -f "next dev" 2>/dev/null || true
+        rm -f "$DASHBOARD_PIDFILE"
+        print_success "Dashboard stopped"
+    else
+        print_info "Dashboard is not running"
+    fi
+}
+
+# Dashboard command
+cmd_dashboard() {
+    local action=${1:-start}
+
+    case $action in
+        start)
+            print_header "Starting Dashboard"
+            start_dashboard
+            ;;
+        stop)
+            print_header "Stopping Dashboard"
+            stop_dashboard
+            ;;
+        *)
+            print_error "Unknown action: $action"
+            echo "Usage: ai-stack dashboard [start|stop]"
+            exit 1
+            ;;
+    esac
+}
+
+# Benchmark command
+cmd_benchmark() {
+    if [ -x "$STACK_DIR/scripts/benchmark.sh" ]; then
+        "$STACK_DIR/scripts/benchmark.sh" "$@"
+    else
+        print_error "Benchmark script not found"
+        exit 1
+    fi
+}
+
+# Backup command
+cmd_backup() {
+    if [ -x "$STACK_DIR/scripts/backup.sh" ]; then
+        "$STACK_DIR/scripts/backup.sh" "$@"
+    else
+        print_error "Backup script not found"
+        exit 1
+    fi
+}
+
 # Help command
 cmd_help() {
     echo -e "${BOLD}${BLUE}ai-stack${NC} - Local AI Stack Management"
@@ -402,18 +511,30 @@ cmd_help() {
     echo -e "  ${CYAN}status${NC}                       Show running services, ports, memory"
     echo -e "  ${CYAN}models${NC}                       List Ollama models with sizes"
     echo -e "  ${CYAN}test${NC}                         Health check both services"
+    echo -e "  ${CYAN}dashboard${NC} [start|stop]       Manage web dashboard"
+    echo -e "  ${CYAN}benchmark${NC} [llm|image|all]    Run performance benchmarks"
+    echo -e "  ${CYAN}backup${NC} <command>             Backup/restore management"
     echo -e "  ${CYAN}help${NC}                         Show this help message"
+    echo ""
+    echo -e "${BOLD}Backup Commands:${NC}"
+    echo "  backup create               Create a new backup"
+    echo "  backup list                 List available backups"
+    echo "  backup restore <file>       Restore from a backup"
+    echo "  backup status               Show backup status"
     echo ""
     echo -e "${BOLD}Examples:${NC}"
     echo "  ai-stack start              # Start all services"
     echo "  ai-stack start ollama       # Start only Ollama"
     echo "  ai-stack stop comfyui       # Stop only ComfyUI"
     echo "  ai-stack status             # Check what's running"
-    echo "  ai-stack test               # Run health checks"
+    echo "  ai-stack dashboard start    # Start the web dashboard"
+    echo "  ai-stack benchmark          # Run performance benchmarks"
+    echo "  ai-stack backup create      # Create a backup"
     echo ""
     echo -e "${BOLD}Services:${NC}"
-    echo -e "  Ollama:   http://127.0.0.1:$OLLAMA_PORT"
-    echo -e "  ComfyUI:  http://127.0.0.1:$COMFYUI_PORT"
+    echo -e "  Ollama:    http://127.0.0.1:$OLLAMA_PORT"
+    echo -e "  ComfyUI:   http://127.0.0.1:$COMFYUI_PORT"
+    echo -e "  Dashboard: http://127.0.0.1:$DASHBOARD_PORT"
 }
 
 # Main
@@ -436,6 +557,15 @@ main() {
             ;;
         test)
             cmd_test
+            ;;
+        dashboard)
+            cmd_dashboard "$@"
+            ;;
+        benchmark)
+            cmd_benchmark "$@"
+            ;;
+        backup)
+            cmd_backup "$@"
             ;;
         help|--help|-h)
             cmd_help
